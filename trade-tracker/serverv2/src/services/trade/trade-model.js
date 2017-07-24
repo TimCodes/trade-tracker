@@ -9,13 +9,15 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const tradeSchema = new Schema({
-  
+
   symbol: { type: String, required: true },
   timeFrame: { type: String, required: true },
-  setupType: { type: String, required: true },
+  strategy: { type: String, required: true },
   quantity: { type: Number, required: true }, 
   status: { type: String, 'default': "stalking" },
   type: { type: String },
+  screenShot: { type: String },
+  notes: { type: String},
   openPrice: { type: Number, required: true }, 
   closePrice: { type: Number, required: true }, 
   stopLoss: { type: Number, required: true }, 
