@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Sidebar, Header, Segment, Button, Menu,  Icon } from 'semantic-ui-react'
+import { Provider } from 'react-redux'
 import logo from './logo.svg';
 import './App.css';
 
+import store from './store'
 import Table from './table'
 import QualifierForm from './QualifierForm'
 
@@ -56,5 +58,8 @@ class App extends Component {
     );
   }
 }
+const Main =  <Provider store ={store}>
+    <App />
+  </Provider>
 
 export default App;
