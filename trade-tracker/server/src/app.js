@@ -15,9 +15,15 @@ const handler = require('feathers-errors/handler');
 const notFound = require('feathers-errors/not-found');
 
 const middleware = require('./middleware');
+blah
+const MongoClient = require('mongodb').MongoClient;
+const service = require('feathers-mongodb');
+
 const services = require('./services');
 const appHooks = require('./app.hooks');
 
+
+const errorHandler = require('feathers-errors/handler');
 const app = feathers();
 
 // Load app configuration
@@ -28,9 +34,32 @@ app.use(helmet());
 app.use(compress());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(favicon(path.join(app.get('public'), 'favicon.ico')));
+app.use(favicon(path.join(app.get('public'), 'favicon.ico')))
 // Host the public folder
 app.use('/', feathers.static(app.get('public')));
+
+  // Connect to the db, create and register a Feathers service.
+MongoClient.connect('mongodb://localhost:27017/feathers')
+    .then(function(db){
+    // Connect to the db, create and register a Feathers service.
+    app.use('/messages', service({
+        Model: db.collection('messages'),
+        paginate: {
+        default: 2,
+        max: 4
+        }
+    }));
+
+     // A basic error handler, just like Express
+  app.use(errorHandler());
+
+  // Create a dummy Message
+  app.service('messages').create({
+    text: 'Message created on server'
+  }).then(message => console.log('Created message', message));
+})   
+
+ 
 
 // Set up Plugins and providers
 app.configure(hooks());
