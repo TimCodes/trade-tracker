@@ -2,12 +2,15 @@
 
 # dependencies
 /node_modules
+node_modules/
+/trade-tracker/client/node_modules
+trade-tracker/client/node_modules
 
 # testing
 /coverage
 
 # production
-/build
+/buildcd 
 
 # misc
 .DS_Store

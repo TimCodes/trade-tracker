@@ -12,21 +12,24 @@ const tradeSchema = new Schema({
 
   symbol: { type: String, required: true },
   timeFrame: { type: String, required: true },
-  strategy: { type: String, required: true },
-  quantity: { type: Number, required: true }, 
+  strategy: { type: String },
+  quantity: { type: Number}, 
   status: { type: String, 'default': "stalking" },
-  type: { type: String },
+  setup: { type: String },
+  timeOfDay: { type: String },
+  rr: { type: String },
   screenShot: { type: String },
   notes: { type: String},
-  openPrice: { type: Number, required: true }, 
-  closePrice: { type: Number, required: true }, 
-  stopLoss: { type: Number, required: true }, 
-  takeProfit: { type: Number, required: true }, 
-  pnl: { type: Number, required: true }, 
+  openPrice: { type: Number}, 
+  closePrice: { type: Number }, 
+  stopLoss: { type: Number }, 
+  takeProfit: { type: Number }, 
+  pnl: { type: Number }, 
   duration: { type: String},
   createdAt: { type: Date, 'default': Date.now },
   updatedAt: { type: Date, 'default': Date.now },
-  closedAt: { type: Date }
+  closedAt: { type: Date },
+  any: Schema.Types.Mixed 
   
 });
 

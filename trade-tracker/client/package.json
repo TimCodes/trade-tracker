@@ -3,11 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.16.2",
+    "font-awesome": "^4.7.0",
     "react": "^15.6.1",
+    "react-data-grid": "^2.0.59",
+    "react-data-grid-addons": "^2.0.59",
     "react-dom": "^15.6.1",
+    "react-dropzone": "^4.2.1",
     "react-live-clock": "^1.1.1",
     "react-redux": "^5.0.5",
+    "react-redux-grid": "^5.1.0",
     "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
     "semantic-ui-react": "^0.71.0"
   },
   "devDependencies": {

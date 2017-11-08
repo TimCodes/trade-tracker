@@ -1,4 +1,5 @@
 'use strict';
+const grader = require('./grader');
 const test = require('./test');
 const trade = require('./trade');
 const authentication = require('./authentication');
@@ -14,4 +15,5 @@ module.exports = function() {
   app.configure(user);
   app.configure(trade);
   app.configure(test);
+  app.configure(grader);
 };
