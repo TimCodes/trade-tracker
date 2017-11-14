@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Checkbox, Form, Input } from 'semantic-ui-react'
 import Dropzone from 'react-dropzone'
 
-import * as actions from './actions/TrackerActions'
+import * as actions from '../actions/TrackerActions'
 
 export default class  TrackerForm extends Component {
 

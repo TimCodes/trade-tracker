@@ -13,8 +13,11 @@ const bodyParser = require('body-parser');
 const socketio = require('feathers-socketio');
 const middleware = require('./middleware');
 const services = require('./services');
+const express  = require('express')
 
 const app = feathers();
+
+console.log('--- path ---', path.join(__dirname, '../../client/public') )
 
 app.configure(configuration(path.join(__dirname, '..')));
 
@@ -22,7 +25,7 @@ app.use(compress())
   .options('*', cors())
   .use(cors())
   .use(favicon( path.join(app.get('public'), 'favicon.ico') ))
-  .use('/', serveStatic( app.get('public') ))
+  .use('/',express.static( path.join(__dirname, '../../client/build') ))
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
   .configure(hooks())
