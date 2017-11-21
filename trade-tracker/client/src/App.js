@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { Sidebar, Header, Segment, Button, Menu,  Icon, Container } from 'semantic-ui-react'
-import { BrowserRouter, Route, NavLink, NavNavLink, withRouter } from 'react-router-dom'
+import {  Segment, Menu, Container } from 'semantic-ui-react'
+import { BrowserRouter, Route, NavLink } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import logo from './logo.svg';
-import './App.css';
 
-import * as graders from "./actions/GraderActions"
+
 
 // /import store from './store'
 
@@ -22,24 +20,18 @@ import * as trackerActions from './actions/TrackerActions'
 class App extends Component {
   constructor(props){
     super(props);
-    this.state = { visible: false, showFormModal : false }
+    this.state = { }
 
     this.toggleVisibility = this.toggleVisibility.bind(this);
     this.toggleFormModal  = this.toggleFormModal.bind(this)
 
     console.log('---- actions -----', trackerActions)
 
-   
     
   }
 
 componentDidMount(){
-    console.log("component mounted ")
-    trackerActions.insertTrackedTrade({
-      "symbol": "EURUSD",
-      "timeFrame": "5M"
-    })
-    .then(console.log)
+    
 }
  
 toggleVisibility () {
@@ -53,7 +45,7 @@ toggleFormModal () {
  
  
 render() {
-    const { visible, showFormModal } = this.state
+   
     return (
       <Provider store={store}>
        <BrowserRouter>

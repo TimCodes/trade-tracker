@@ -21,12 +21,6 @@ class ModalExampleSize extends Component {
           <Modal.Content>
             {this.props.children}
           </Modal.Content>
-          <Modal.Actions>
-            <Button negative>
-              No
-            </Button>
-            <Button positive icon='checkmark' labelPosition='right' content='Yes' />
-          </Modal.Actions>
         </Modal>
  
     )

@@ -14,7 +14,7 @@ const tradeSchema = new Schema({
   timeFrame: { type: String, required: true },
   strategy: { type: String },
   quantity: { type: Number}, 
-  status: { type: String, 'default': "stalking" },
+  status: { type: String, 'default': "Tracking" },
   setup: { type: String },
   timeOfDay: { type: String },
   rr: { type: String },

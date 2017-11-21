@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Checkbox, Form, Input } from 'semantic-ui-react'
+import { Button, Checkbox, Form, Input, Image } from 'semantic-ui-react'
 import Dropzone from 'react-dropzone'
 
 import * as actions from '../actions/TrackerActions'
@@ -69,17 +69,14 @@ export default class  TrackerForm extends Component {
                 <Input placeholder='2/1'  name="rr" onChange={this.handleFormChange} />
             </Form.Field>
             <Form.Field>
-                <label>PNL</label>
-                <Input placeholder='$500'  name="pnl" onChange={this.handleFormChange} />
+                <label>Notes</label>
+                <Input placeholder='Looking for Fractal Retest '  name="notes" onChange={this.handleFormChange} />
             </Form.Field>
             <Form.Field>
                 <label>chart</label>
                 <Dropzone onDrop={this.onDrop}>
                 </Dropzone>
-                <img src={this.state.chartFile.preview} alt=""/>
-            </Form.Field>
-            <Form.Field>
-            <Checkbox label='I agree to the Terms and Conditions' />
+                <Image src={this.state.chartFile.preview} alt=""/>
             </Form.Field>
             <Button type='submit' onClick={this.handleSubmit}>Submit</Button>
         </Form>
