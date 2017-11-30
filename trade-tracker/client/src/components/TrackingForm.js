@@ -10,7 +10,8 @@ export default class  TrackerForm extends Component {
      super(props);
      this.onDrop = this.onDrop.bind(this);
      this.state = {
-         chartFile : {}
+         chartFile : {},
+         chartData: null
      }
 
      this.handleFormChange = this.handleFormChange.bind(this);
@@ -26,14 +27,15 @@ export default class  TrackerForm extends Component {
   
  }  
  onDrop(acceptedFiles, rejectedFiles) {
-    console.log(acceptedFiles)
+  //  console.log(acceptedFiles)
     const reader = new FileReader();
     this.setState({chartFile: acceptedFiles[0]})
     reader.onload = () => {
         const fileAsBinaryString = reader.result;
         // do whatever you want with the file content
-        console.log(fileAsBinaryString)
-        console.log(acceptedFiles[0])
+        console.log("---- base 64 woot ---",fileAsBinaryString)
+        this.setState({chartData: fileAsBinaryString})
+        //console.log(acceptedFiles[0])
     };
     reader.onabort = () => console.log('file reading was aborted');
     reader.onerror = () => console.log('file reading has failed');

@@ -35,7 +35,7 @@ class Tracking extends Component {
         let cards = this.state.trades.map(a => {
             return (
                 <Card raised key={a['_id']}>
-                    <Image src='http://www.profitabletrading.com/sites/default/files/candlestick-chart.png' />
+                    <Image src={ a.chartUri || 'http://www.profitabletrading.com/sites/default/files/candlestick-chart.png' } />
                     <Card.Content>
                         <Card.Header>{a.symbol}</Card.Header>
                         <Card.Meta>{ a.strategy + " " + a.setup  + " " + a.timeOfDay +  " " + a.timeFrame}</Card.Meta>

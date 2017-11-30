@@ -1,4 +1,5 @@
 'use strict';
+const upload = require('./upload');
 const grader = require('./grader');
 const test = require('./test');
 const trade = require('./trade');
@@ -16,4 +17,5 @@ module.exports = function() {
   app.configure(trade);
   app.configure(test);
   app.configure(grader);
+  app.configure(upload);
 };

@@ -17,7 +17,7 @@ export const insertTrackedTrade = (trade) => {
 
 export const fetchTrackedTrades = () => {
     console.log('--- get treardes ---')
-    return trackerAxios.get('/trades?status=stalking')
+    return trackerAxios.get('/trades?status=Tracking')
     .then(res => {
         console.log('trades gotton', res)
         console.log(res)

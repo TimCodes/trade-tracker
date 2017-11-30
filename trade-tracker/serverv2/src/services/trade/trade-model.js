@@ -29,7 +29,7 @@ const tradeSchema = new Schema({
   createdAt: { type: Date, 'default': Date.now },
   updatedAt: { type: Date, 'default': Date.now },
   closedAt: { type: Date },
-  any: Schema.Types.Mixed 
+  chartUri: { type: String}
   
 });
 
