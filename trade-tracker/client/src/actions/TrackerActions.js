@@ -26,7 +26,16 @@ export const fetchTrackedTrades = () => {
     .catch(console.log)
 };
 
-export const fetchTrackedTrade  = (tradeId) => {};
+export const fetchTrackedTrade  = (tradeId) => {
+    console.log('--- get treardes ---')
+    return trackerAxios.get(`/trades/${tradeId}`)
+    .then(res => {
+        console.log('trades gotton', res)
+        console.log(res)
+        return res.data
+    })
+    .catch(console.log)
+};
 
 export const updateTrackedTrade = (tradeId) => {};
 

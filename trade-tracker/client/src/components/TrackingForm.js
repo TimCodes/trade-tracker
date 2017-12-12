@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Button, Checkbox, Form, Input, Image } from 'semantic-ui-react'
 import Dropzone from 'react-dropzone'
 
 import * as actions from '../actions/TrackerActions'
 
-export default class  TrackerForm extends Component {
+ class  TrackerForm extends Component {
 
  constructor(props){
      super(props);
@@ -17,13 +18,21 @@ export default class  TrackerForm extends Component {
      this.handleFormChange = this.handleFormChange.bind(this);
      this.handleSubmit     = this.handleSubmit.bind(this);
  }
+
+ componentWillMount(){
+     console.log('--- mounted ---', this.props)
+     //this.state = this.props.trackingForm
+     this.setState(this.props.trackingForm)
+ }
  handleSubmit(){
      console.log(this.state)
      actions.insertTrackedTrade(this.state)
  } 
  handleFormChange(e, {value}){
      console.log("--- form change ---", e.target)
-    this.setState({ [e.target.name] : value })
+     this.setState({ [e.target.name] : value })
+
+     this.props.setTrackingForm({ [e.target.name] : value })
   
  }  
  onDrop(acceptedFiles, rejectedFiles) {
@@ -48,40 +57,59 @@ export default class  TrackerForm extends Component {
         <Form>
             <Form.Field>
                 <label>Pair</label>
-                <Input placeholder='EurUsd' name="symbol" onChange={this.handleFormChange} />
+                <Input placeholder='EurUsd' name="symbol" onChange={this.handleFormChange} value={this.state.symbol} />
             </Form.Field>
             <Form.Field>
                 <label>Time Frame</label>
-                <Input placeholder='5m' name="timeFrame" onChange={this.handleFormChange} />
+                <Input placeholder='5m' name="timeFrame" onChange={this.handleFormChange} value={this.state.timeFrame} />
             </Form.Field>
             <Form.Field>
                 <label>Core Strategy</label>
-                <Input placeholder='goodman' name="strategy" onChange={this.handleFormChange} />
+                <Input placeholder='goodman' name="strategy" onChange={this.handleFormChange}  value={this.state.strategy}/>
             </Form.Field>
             <Form.Field>
                 <label>Setup Type</label>
-                <Input placeholder='goldilocks'  name="setup"  onChange={this.handleFormChange}/>
+                <Input placeholder='goldilocks'  name="setup"  onChange={this.handleFormChange} value={this.state.setup}/>
             </Form.Field>
             <Form.Field>
                 <label>Time Of Day</label>
-                <Input placeholder='asian'  name="timeOfDay" onChange={this.handleFormChange} />
+                <Input placeholder='asian'  name="timeOfDay" onChange={this.handleFormChange} value={this.state.timeOfDay} />
             </Form.Field>
             <Form.Field>
                 <label>RR</label>
-                <Input placeholder='2/1'  name="rr" onChange={this.handleFormChange} />
+                <Input placeholder='2/1'  name="rr" onChange={this.handleFormChange}  value={this.state.rr}/>
             </Form.Field>
             <Form.Field>
                 <label>Notes</label>
-                <Input placeholder='Looking for Fractal Retest '  name="notes" onChange={this.handleFormChange} />
+                <Input placeholder='Looking for Fractal Retest '  name="notes" onChange={this.handleFormChange}  value={this.state.notes}/>
             </Form.Field>
             <Form.Field>
                 <label>chart</label>
                 <Dropzone onDrop={this.onDrop}>
                 </Dropzone>
-                <Image src={this.state.chartFile.preview} alt=""/>
+                <Image src={ this.state.chartUri || this.state.chartFile.preview} alt=""/>
             </Form.Field>
             <Button type='submit' onClick={this.handleSubmit}>Submit</Button>
         </Form>
     )
   } 
 }
+
+
+const mapStateToProps = (state) => (
+  {  
+    
+    trackingForm: state.trackingForm
+
+  } 
+)
+
+const mapDispatchToProps = (dispatch) => (
+    {
+        setTrackingForm : (trackingForm) => {
+            return dispatch({ type: 'SET_FORM_VALUE', payLoad:trackingForm })
+        }
+    }
+)
+
+export default connect(mapStateToProps, mapDispatchToProps)(TrackerForm)

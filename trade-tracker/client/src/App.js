@@ -12,7 +12,7 @@ import Tracking from './components/Tracking'
 import History from './components/History'
 import ClockWall from './components/ClockWall'
 
-import store from './store'
+import store from './store/configStore'
 import * as trackerActions from './actions/TrackerActions'
 
 

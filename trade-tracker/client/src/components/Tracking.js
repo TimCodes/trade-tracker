@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Card, Image, Label, Segment, Button, Header} from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import * as actions from '../actions/TrackerActions'
 import TrackerForm from './TrackingForm'
 import FormModal from './FormModal'
@@ -12,13 +13,14 @@ let arr = [
     'adgdsg'
   ]
 class Tracking extends Component {
+
     constructor(props){
         super(props)
         console.log('--- get trades ---')
         this.state = { visible: false, showFormModal : false, trades: [] }
         this.toggleFormModal = this.toggleFormModal.bind(this)
+        this.startEdit    = this.startEdit.bind(this)
     }
-
 
     componentWillMount(){
         actions.fetchTrackedTrades().then(data =>  {
@@ -26,9 +28,23 @@ class Tracking extends Component {
             this.setState({trades : data }) 
         })
     }
+    
     toggleFormModal(){
         this.setState({ showFormModal: !this.state.showFormModal})
     }
+
+    startEdit(trackId){
+        console.log('---start edit ----', trackId)
+        actions.fetchTrackedTrade(trackId)
+        .then(r => {
+            this.props.setTrackingForm(r)
+            return r
+        })
+        .then( r => this.toggleFormModal())
+     
+    }
+
+
     render() {
         let {showFormModal} = this.state
         console.log('-- state ---', this.state)
@@ -43,6 +59,8 @@ class Tracking extends Component {
                     </Card.Content>
                     <Card.Content extra>
                         <Label color='violet' ribbon>Tracking</Label>
+                        <Button floated="right"  color='orange'>Delete</Button>       
+                        <Button floated="right"  onClick={() => this.startEdit(a['_id']) } color='teal'>Edit</Button>            
                     </Card.Content>
                 </Card>
             )
@@ -95,4 +113,20 @@ class Tracking extends Component {
     }
 }
 
-export default Tracking;
+const mapStateToProps = (state) => (
+    {  
+      
+      trackingForm: state.trackingForm
+  
+    } 
+  )
+  
+  const mapDispatchToProps = (dispatch) => (
+      {
+          setTrackingForm : (trackingForm) => {
+              return dispatch({ type: 'SET_FORM_VALUE', payLoad:trackingForm })
+          }
+      }
+  )
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(Tracking)

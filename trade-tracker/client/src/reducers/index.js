@@ -2,6 +2,7 @@ import {combineReducers} from 'redux';
 import { reducer as formReducer } from 'redux-form';
 
 import qualifier from './qualifier'
+import {trackingForm} from './trackingform'
 
 const trades = (state = {}, action) => {
 
@@ -22,7 +23,8 @@ const trades = (state = {}, action) => {
 
 const mainReducer = combineReducers({
     trades,
-    form: formReducer
+    form: formReducer,
+    trackingForm
 });
 
 export default mainReducer
