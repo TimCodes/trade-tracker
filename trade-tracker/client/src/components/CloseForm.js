@@ -24,7 +24,7 @@ class  TrackerForm extends Component {
 
     handleSubmit(){
         console.log(this.state)
-        this.props.handleSubmit(this.state)
+        this.props.handleSubmit(this.setState)
     } 
 
     handleFormChange(e, {value}){
@@ -84,6 +84,26 @@ class  TrackerForm extends Component {
                     <Input placeholder='2/1'  name="rr" onChange={this.handleFormChange}  value={this.state.rr}/>
                 </Form.Field>
                 <Form.Field>
+                    <label>Quanity</label>
+                    <Input placeholder='1000'  name="quantity" onChange={this.handleFormChange}  value={this.state.quantity}/>
+                </Form.Field>
+                <Form.Field>
+                    <label>Open Price</label>
+                    <Input placeholder='1000'  name="openPrice" onChange={this.handleFormChange}  value={this.state.openPrice}/>
+                </Form.Field>
+                <Form.Field>
+                    <label>Close Price</label>
+                    <Input placeholder='1200'  name="closePrice" onChange={this.handleFormChange}  value={this.state.closePrice}/>
+                </Form.Field>
+                <Form.Field>
+                    <label>Stop Loss</label>
+                    <Input placeholder='1.000'  name="stopLoss" onChange={this.handleFormChange}  value={this.state.stopLoss}/>
+                </Form.Field>
+                <Form.Field>
+                    <label>Take Profit</label>
+                    <Input placeholder='1.200'  name="takeProfit" onChange={this.handleFormChange}  value={this.state.takeProfit}/>
+                </Form.Field>
+                <Form.Field>
                     <label>Notes</label>
                     <Input placeholder='Looking for Fractal Retest '  name="notes" onChange={this.handleFormChange}  value={this.state.notes}/>
                 </Form.Field>
@@ -93,7 +113,7 @@ class  TrackerForm extends Component {
                     </Dropzone>
                     <Image src={ this.state.chartUri || this.state.chartFile.preview} alt=""/>
                 </Form.Field>
-                <Button type='submit' onClick={this.handleSubmit}>Submit</Button>
+                <Button type='submit' onClick={this.handleSubmit}>Close and Save</Button>
             </Form>
         )
     } 

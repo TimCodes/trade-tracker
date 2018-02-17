@@ -19,6 +19,25 @@ let setupOptions = [
     }
 
 ]
+
+let statusOptions = [
+    {
+        key   : "Tracking",
+        value : "Tracking",
+        text  : "Tracking"
+    },
+    {
+        key   : "Open",
+        value : "Open",
+        text  : "Open"
+    },
+    {
+        key   : "Both",
+        value : "Both",
+        text  : "Both"
+    }
+
+]
 class TrackingMenu extends Component {
     constructor(props) {
         super(props);
@@ -43,19 +62,15 @@ class TrackingMenu extends Component {
         const { activeItem } = this.state
         return (
         <Menu  inverted color='blue'>
-            <Menu.Item name='Tracking' active={activeItem === 'Tracking'} onClick={this.handleItemClick} />
-            <Menu.Item name='Open' active={activeItem === 'Open'} onClick={this.handleItemClick} />
-            <Menu.Item name='Both' active={activeItem === 'Both'} onClick={this.handleItemClick} />
-            <Menu.Menu position='left'>
-            <Dropdown placeholder='Setup Type' item options={setupOptions}  onChange={this.handleSetupChange} />
+            <Menu.Menu>
+                <Dropdown placeholder='Status' item options={statusOptions}  onChange={this.handleSetupChange} />
+            </Menu.Menu>     
+            <Menu.Menu >
+                <Dropdown placeholder='Setup Type' item options={setupOptions}  onChange={this.handleSetupChange} />
             </Menu.Menu> 
-            <Menu.Menu tabular>
-                <Menu.Item name='bio' active={activeItem === 'bio'} onClick={this.handleItemClick} />
-                <Menu.Item name='photos' active={activeItem === 'photos'} onClick={this.handleItemClick} />
-            </Menu.Menu>   
             <Menu.Menu position='right'>
              <Menu.Item>
-                <Icon  name='add circle' inverted size='large' onClick={this.props.toggleFormModal} />
+                <Icon  name='add circle' inverted size='large' onClick={this.props.handleAddNew} />
              </Menu.Item> 
             </Menu.Menu>
         </Menu>

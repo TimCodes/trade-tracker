@@ -25,11 +25,14 @@ const tradeSchema = new Schema({
   stopLoss: { type: Number }, 
   takeProfit: { type: Number }, 
   pnl: { type: Number }, 
+  result:{type:String},
+  tags:{type:Array},
   duration: { type: String},
   createdAt: { type: Date, 'default': Date.now },
   updatedAt: { type: Date, 'default': Date.now },
   closedAt: { type: Date },
-  chartUri: { type: String}
+  chartUri: { type: String},
+
   
 });
 

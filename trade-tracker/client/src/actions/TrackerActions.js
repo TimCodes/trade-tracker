@@ -15,13 +15,12 @@ export const insertTrackedTrade = (trade) => {
      .catch(console.log)
 };
 
-export const fetchTrackedTrades = () => {
+export const fetchTrackedTrades = () => (dispatch) => {
     console.log('--- get treardes ---')
-    return trackerAxios.get('/trades?status=Tracking')
+    return trackerAxios.get('/trades')
     .then(res => {
         console.log('trades gotton', res)
-        console.log(res)
-        return res.data.data
+        dispatch({type: "RECIEVE_TRADES", payLoad:  res.data.data})
     })
     .catch(console.log)
 };
@@ -37,8 +36,26 @@ export const fetchTrackedTrade  = (tradeId) => {
     .catch(console.log)
 };
 
-export const updateTrackedTrade = (tradeId) => {};
+export const deleteTrackedTrade  = (tradeId) => {
+    console.log('--- get treardes ---')
+    return trackerAxios.delete(`/trades/${tradeId}`)
+    .then(res => {
+        console.log('trades gotton', res)
+        console.log(res)
+        return res.data
+    })
+    .catch(console.log)
+};
 
-export const deleteTrackedTrade = (tradeId) => {};
+
+export const updateTrackedTrade = (tradeId, trade) => {
+    return  trackerAxios.put(`/trades/${tradeId}`, trade)
+    .then(console.log)
+    .catch(console.log)
+};
+
+export const getFiltered = (field, value) => {
+    return []
+}
 
 
