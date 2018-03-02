@@ -7,7 +7,7 @@ import TrackerCardGroup from './TrackerCardGroup'
 import CloseForm from './CloseForm'
 import FormModal from './FormModal'
 import TrackingMenu from './TrackingMenu'
-import * as TradeSelectors from '../selectors/Trades'
+import * as TradeSelectors from '../selectors/TradeSelector'
 
 
 class Tracking extends Component {
@@ -47,29 +47,14 @@ class Tracking extends Component {
     }
     
     
-    startEdit(trackId){
-        console.log('---start edit ----', trackId)
+    startEdit(trade){
+        console.log('---start edit ----', trade)
         this.setState({isEditing: true})
-        actions.fetchTrackedTrade(trackId)
-        .then(r => {
-            this.props.setTrackingForm(r)
-            return r
-        })
-        .then( r => this.toggleTrackingFormModal())
+        this.props.setTrackingForm(trade);
+        this.toggleTrackingFormModal();
      
     }
 
-    startClose(trackId){
-        console.log('---start edit ----', trackId)
-        this.setState({isEditing: true})
-        actions.fetchTrackedTrade(trackId)
-        .then(r => {
-            this.props.setTrackingForm(r)
-            return r
-        })
-        .then( r => this.toggleCloseFormModal())
-     
-    }
     
     toggleDeleteConfirm(tradeId){
         if(tradeId){
@@ -127,7 +112,10 @@ class Tracking extends Component {
        
         return (
             <Segment basic >
-                <TrackingMenu  handleAddNew={this.handleAddNew}></TrackingMenu>
+                <TrackingMenu 
+                 handleAddNew={this.handleAddNew}
+                 handleStatusChange={this.props.setFilter}
+                 />
                 <TrackerCardGroup 
                              trades={this.props.trades} 
                              toggleDeleteConfirm = {this.toggleDeleteConfirm}
@@ -156,14 +144,14 @@ const mapStateToProps = (state) => (
       trackingForm: state.trackingForm,
       trackedTrades: TradeSelectors.selectTrackedTrades(state),
       openTrades : TradeSelectors.selectOpenTrades(state),
-      trades : state.trades.trades
+      trades : TradeSelectors.visibleTradesSelector(state)
     } 
   )
   
   const mapDispatchToProps = (dispatch) => (
       {
           setTrackingForm : (trackingForm) => {
-              return dispatch({ type: 'SET_FORM_VALUE', payLoad:trackingForm });
+              return dispatch({ type: 'SET_FORM_VALUES', payLoad:trackingForm });
           },
 
           deleteTrade : (tradeId) => {
@@ -181,6 +169,10 @@ const mapStateToProps = (state) => (
           getAllTrades: () => {
             console.log("fetch all trades ")  
             return   dispatch(actions.fetchTrackedTrades());
+          },
+
+          setFilter: (filter) => {
+            return dispatch(actions.setTradesFilter(filter))
           }
       }
   )

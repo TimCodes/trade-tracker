@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { Segment, Card, Image, Button, Statistic, Table} from 'semantic-ui-react';
 import HistoryMenu from './HistoryMenu'
+import { connect } from 'react-redux';
 
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 
 import * as actions from '../actions/TrackerActions'
+import * as TradeSelectors from '../selectors/TradeSelector'
+
+
+// TODO : use redux for fitler from react data table 
 
 
 const StatisticExampleHorizontalGroup = () => (
@@ -53,10 +58,9 @@ class History extends Component {
   }
 
   componentWillMount(){
-        actions.fetchTrackedTrades().then(data =>  {
-            console.log('fetch', data)
-            this.setState({trades : data }) 
-        })
+      this.props.setFilter("closed");
+      console.log("histpry trades", this.props.trades)
+      this.setState({trades : this.props.trades})
   }
 
   componentWillUpdate(nextProps, nextState){
@@ -85,13 +89,18 @@ class History extends Component {
       },
       {
         Header: 'Time Of Day',
-        accessor: 'timeOfDay', // String-based value accessors!
+        accessor: 'timeofday', // String-based value accessors!
       
       } ,
       {
         Header: 'PNL',
         accessor: 'pnl', // String-based value accessors!  
       },  
+      {
+        Header: 'Result',
+        accessor: 'result', // String-based value accessors!
+      
+      } 
      
     ]
 
@@ -127,7 +136,7 @@ class History extends Component {
                     }} 
                     minRows={0}
                     filterAll={true}
-              
+                    pages={20}
                    
                 />
                 </Segment>
@@ -138,5 +147,44 @@ class History extends Component {
 
 
 
+const mapStateToProps = (state) => (
+  {  
+    trackingForm: state.trackingForm,
+    trackedTrades: TradeSelectors.selectTrackedTrades(state),
+    openTrades : TradeSelectors.selectOpenTrades(state),
+    trades : TradeSelectors.visibleTradesSelector(state)
+  } 
+)
 
-export default History;
+const mapDispatchToProps = (dispatch) => (
+    {
+        setTrackingForm : (trackingForm) => {
+            return dispatch({ type: 'SET_FORM_VALUES', payLoad:trackingForm });
+        },
+
+        deleteTrade : (tradeId) => {
+            return actions.deleteTrackedTrade(tradeId);
+        },
+
+        inserTrade : (trade) => {
+          return actions.insertTrackedTrade(trade);
+        },
+
+        editTrade : (tradeId, trade ) => {
+            return actions.updateTrackedTrade(tradeId, trade);
+        },
+
+        getAllTrades: () => {
+          console.log("fetch all trades ")  
+          return   dispatch(actions.fetchTrackedTrades());
+        },
+
+        setFilter: (filter) => {
+          return dispatch(actions.setTradesFilter(filter))
+        }
+    }
+)
+
+export default connect(mapStateToProps, mapDispatchToProps)(History)
+
+

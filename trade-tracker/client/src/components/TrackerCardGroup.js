@@ -5,11 +5,11 @@ import TrackerCard from './TrackerCard'
 
 class TrackerCardGroup extends Component {
     render() {
-        let cards = this.props.trades.map(a => {
-            let trade = a;
+        let cards = this.props.trades.map(trade => {
+         
             let  label = "";
             {  
-                switch(a.status){
+                switch(trade.status){
                   case "Open": {
                     label =   <Label color='green' ribbon>Open</Label>;
                     break;
@@ -29,8 +29,7 @@ class TrackerCardGroup extends Component {
                 <TrackerCard
                     trade={trade}
                     toggleDeleteConfirm = {this.props.toggleDeleteConfirm}
-                    startClose = {this.props.startClose}
-                    startEdit = {this.props.startEdit}
+                    startEdit = {() => this.props.startEdit(trade)}
                     label = {label}
                 />
             )

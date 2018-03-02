@@ -16,8 +16,7 @@ class TrackerCard extends Component {
               {
                  this.props.label
               }
-                <Button floated="right"  color='orange' onClick={() => this.props.toggleDeleteConfirm(trade['_id'])} >Delete</Button>
-                <Button floated="right"  onClick={() =>this.props.startClose(trade['_id']) } color='teal'>close</Button>         
+                <Button floated="right"  color='orange' onClick={() => this.props.toggleDeleteConfirm(trade['_id'])} >Delete</Button>  
                 <Button floated="right"  onClick={() => this.props.startEdit(trade['_id']) } color='teal'>Edit</Button>            
             </Card.Content>
         </Card>

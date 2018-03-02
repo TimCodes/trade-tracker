@@ -36,13 +36,11 @@ export const fetchTrackedTrade  = (tradeId) => {
     .catch(console.log)
 };
 
-export const deleteTrackedTrade  = (tradeId) => {
+export const deleteTrackedTrade  = (tradeId) => (dispatch) => {
     console.log('--- get treardes ---')
     return trackerAxios.delete(`/trades/${tradeId}`)
     .then(res => {
-        console.log('trades gotton', res)
-        console.log(res)
-        return res.data
+       dispatch({type: "DELETE_TRADE", payLoad:  res.data.data})     
     })
     .catch(console.log)
 };
@@ -58,4 +56,8 @@ export const getFiltered = (field, value) => {
     return []
 }
 
+export const setTradesFilter = (filter) => dispatch => {
+    console.log("---- set filter -----")
+    dispatch({type: 'SET_VISIBILITY_FILTER', payLoad: filter });
+}
 

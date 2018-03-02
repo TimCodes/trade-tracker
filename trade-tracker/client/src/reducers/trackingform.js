@@ -13,7 +13,7 @@ const defaultState = {
 
 export const trackingForm = (state = defaultState, action) => {
     switch (action.type) {
-        case 'SET_FORM_VALUE':
+        case 'SET_FORM_VALUES':
         console.log('--- change ---', action)
         let newState = Object.assign( {}, state )
         for (const key in action.payLoad) {

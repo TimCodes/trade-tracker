@@ -1,6 +1,7 @@
 const defaultState = {
     trades: [],
-    filteredTrades: []
+    filteredTrades: [],
+    visibilityFilter: null
 }
 
 const Trades = (state = defaultState, action) => {
@@ -11,12 +12,34 @@ const Trades = (state = defaultState, action) => {
           return {
             ...state,
             trades : action.payLoad
-          }
+        }
+
         case 'RECIEVE_FILTERED_TRADES':
            return {
             ...state,
             filteredTrades : action.payLoad
-          }
+        }
+        
+        case 'ADD_TRADE' :
+            return {
+               ...state,
+               trades : [...state.trades, action.payLoad]
+                       
+        }
+
+        case 'DELETE_TRADE' :
+            return {
+               ...state,
+               trades : state.trades.filter(trade => trade["_id"] !== action.payLoad)
+                       
+        }
+
+        case 'SET_VISIBILITY_FILTER':
+          return {
+           ...state,
+           visibilityFilter: action.payLoad
+        }  
+
         default:
           return state;
       }

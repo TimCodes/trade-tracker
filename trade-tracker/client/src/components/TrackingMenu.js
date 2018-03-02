@@ -41,8 +41,9 @@ let statusOptions = [
 class TrackingMenu extends Component {
     constructor(props) {
         super(props);
-        this.state = { activeItem: 'Tracking' }
-        this.handleSetupChange = this.handleSetupChange.bind(this)
+        this.state = { activeItem: 'Tracking' };
+        this.handleSetupChange  = this.handleSetupChange.bind(this);
+        this.handleStatusChange = this.handleStatusChange.bind(this);
     }
 
     componentWillMount() {
@@ -57,13 +58,19 @@ class TrackingMenu extends Component {
         console.log(data)
         console.log('change')
     }
+
+    handleStatusChange(e, data){
+        console.log(e)
+        console.log(data.value)
+        console.log(' status change change')
+    }
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
     render() {
         const { activeItem } = this.state
         return (
         <Menu  inverted color='blue'>
             <Menu.Menu>
-                <Dropdown placeholder='Status' item options={statusOptions}  onChange={this.handleSetupChange} />
+                <Dropdown placeholder='Status' item options={statusOptions}  onChange={(e,data) =>  this.props.handleStatusChange(data.value)} />
             </Menu.Menu>     
             <Menu.Menu >
                 <Dropdown placeholder='Setup Type' item options={setupOptions}  onChange={this.handleSetupChange} />
