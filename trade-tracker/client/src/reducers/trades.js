@@ -1,7 +1,8 @@
 const defaultState = {
     trades: [],
     filteredTrades: [],
-    visibilityFilter: null
+    visibilityFilter: null,
+    historicalTradesFilters : []
 }
 
 const Trades = (state = defaultState, action) => {
@@ -38,6 +39,13 @@ const Trades = (state = defaultState, action) => {
           return {
            ...state,
            visibilityFilter: action.payLoad
+        }
+        
+        
+        case 'SET_HISTORICAL_FILTERS':
+          return {
+           ...state,
+           historicalTradesFilters: action.payLoad
         }  
 
         default:

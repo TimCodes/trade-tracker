@@ -109,10 +109,11 @@ class History extends Component {
                 <HistoryMenu></HistoryMenu>
                 <Segment  basic>
                  <CardExampleGroups></CardExampleGroups>
+                 {this.props.totalPNL}
                 </Segment>
                 <Segment basic>
                   <ReactTable
-                    data={this.state.trades}
+                    data={this.props.trades}
                     columns={columns}
                     filterable
                     style={{
@@ -120,19 +121,9 @@ class History extends Component {
                     }}
                     className="-striped -highlight"
                     onFilteredChange={(filters) => {
-                      let newTrades = this.state.trades.filter(trade =>{
-                         let pass = true;
-                         filters.forEach( f => {
-                           let tradeVal = String(trade[f.id])
-                           console.log('val', tradeVal)
-                           if(!tradeVal.startsWith(f.value)){
-                            pass = false
-                           }
-                         })
-                         return pass;
-                      })
-                    //  console.log(filters)
-                      this.setState({filteredTrades:newTrades})
+                  
+                     
+                      this.props.setHistoricalTradesFilters(filters);
                     }} 
                     minRows={0}
                     filterAll={true}
@@ -152,7 +143,8 @@ const mapStateToProps = (state) => (
     trackingForm: state.trackingForm,
     trackedTrades: TradeSelectors.selectTrackedTrades(state),
     openTrades : TradeSelectors.selectOpenTrades(state),
-    trades : TradeSelectors.visibleTradesSelector(state)
+    trades : TradeSelectors.historicalTradesSlector(state),
+    totalPNL : TradeSelectors.historicalTotalPNL(state)
   } 
 )
 
@@ -161,11 +153,16 @@ const mapDispatchToProps = (dispatch) => (
         setTrackingForm : (trackingForm) => {
             return dispatch({ type: 'SET_FORM_VALUES', payLoad:trackingForm });
         },
+        
+        setHistoricalTradesFilters: (filters) => {
+            return dispatch({ type: "SET_HISTORICAL_FILTERS", payLoad: filters})
+        },
 
         deleteTrade : (tradeId) => {
             return actions.deleteTrackedTrade(tradeId);
         },
-
+        
+     
         inserTrade : (trade) => {
           return actions.insertTrackedTrade(trade);
         },
