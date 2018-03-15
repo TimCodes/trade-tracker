@@ -88,20 +88,49 @@ const getWins = (htrades ) => {
      return htrades.filter(t => t.result == "Win" );
 };
  
- export const historicalWinningTrades = createSelector(
+export const historicalWinningTrades = createSelector(
      [historicalTradesSlector],
      getWins
- );
-
+);
 
 const getLosses = (htrades ) => {
-    return  htrades.filter(t => t.result == "Loss" );
+    return htrades.filter(t => t.result == "Loss" );
 };
 
 export const historicalLossingTrades = createSelector(
     [historicalTradesSlector],
     getLosses
 );
+
+
+export const historicalLossingTradesCount = createSelector(
+    [historicalLossingTrades],
+    (losingTrades) => losingTrades.length || 0
+);
+
+
+export const historicalWinningTradesCount = createSelector(
+    [historicalWinningTrades],
+    (winningTrades) => winningTrades.length || 0
+);
+
+
+export const historicalLossingTradesAvgPnl = createSelector(
+    [historicalLossingTrades, historicalLossingTradesCount],
+    (lossingTrades, lossingCount) =>{
+        let totalPnl = lossingTrades.reduce( (accumulator, trade) => accumulator + Number(trade.pnl) || 0, 0 ).toFixed(2);
+        return (totalPnl / lossingCount).toFixed(2); 
+    }
+);
+
+export const historicalWinningTradesAvgPnl = createSelector(
+    [historicalWinningTrades, historicalWinningTradesCount],
+    (winningTrades, winningCount) =>{
+        let totalPnl = winningTrades.reduce( (accumulator, trade) => accumulator + Number(trade.pnl) || 0, 0 ).toFixed(2);
+        return (totalPnl / winningCount).toFixed(2); 
+    }
+);    
+
 
 
 

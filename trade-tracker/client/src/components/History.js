@@ -105,11 +105,17 @@ class History extends Component {
     ]
 
    return (
-            <Segment basic >
-                <HistoryMenu></HistoryMenu>
+            <Segment basic > 
+               
                 <Segment  basic>
                  <CardExampleGroups></CardExampleGroups>
-                 {this.props.totalPNL}
+                  total pnl  :  {this.props.totalPNL}
+                  total count  :  {this.props.trades.length}                  
+                  loss count :  {this.props.lossingTradesCount}
+                  win  count :  {this.props.winningTradesCount}
+                  average loss : {this.props.averageLossPnl}
+                  average win : {this.props.averageWinPnl}
+                  
                 </Segment>
                 <Segment basic>
                   <ReactTable
@@ -121,8 +127,6 @@ class History extends Component {
                     }}
                     className="-striped -highlight"
                     onFilteredChange={(filters) => {
-                  
-                     
                       this.props.setHistoricalTradesFilters(filters);
                     }} 
                     minRows={0}
@@ -144,7 +148,13 @@ const mapStateToProps = (state) => (
     trackedTrades: TradeSelectors.selectTrackedTrades(state),
     openTrades : TradeSelectors.selectOpenTrades(state),
     trades : TradeSelectors.historicalTradesSlector(state),
-    totalPNL : TradeSelectors.historicalTotalPNL(state)
+    totalPNL : TradeSelectors.historicalTotalPNL(state),
+    winningTradesCount : TradeSelectors.historicalWinningTradesCount(state),
+    lossingTradesCount : TradeSelectors.historicalLossingTradesCount(state),
+    winningTrades: TradeSelectors.historicalWinningTrades(state),
+    averageWinPnl : TradeSelectors.historicalWinningTradesAvgPnl(state),
+    averageLossPnl : TradeSelectors.historicalLossingTradesAvgPnl(state)
+    
   } 
 )
 
