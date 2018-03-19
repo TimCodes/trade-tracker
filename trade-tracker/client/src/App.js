@@ -9,7 +9,7 @@ import { Provider } from 'react-redux'
 
 import Home from './components/Home'
 import Tracking from './components/Tracking'
-import History from './components/History'
+import History from './components/History/History'
 import ClockWall from './components/ClockWall'
 
 import store from './store/configStore'

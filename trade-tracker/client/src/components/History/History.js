@@ -1,47 +1,19 @@
 import React, { Component } from 'react';
 import { Segment, Card, Image, Button, Statistic, Table} from 'semantic-ui-react';
-import HistoryMenu from './HistoryMenu'
 import { connect } from 'react-redux';
-
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 
-import * as actions from '../actions/TrackerActions'
-import * as TradeSelectors from '../selectors/TradeSelector'
+import HistoryMenu from './HistoryMenu'
+import HistoryStats from './HistoryStats'
+import HistoryTable from './HistoryTable'
+
+
+import * as actions from '../../actions/TrackerActions'
+import * as TradeSelectors from '../../selectors/TradeSelector'
 
 
 // TODO : use redux for fitler from react data table 
-
-
-const StatisticExampleHorizontalGroup = () => (
-    <Statistic.Group horizontal widths={12} size={'huge'}>
-      <Statistic>
-        <Statistic.Value>2,204</Statistic.Value>
-        <Statistic.Label>Views</Statistic.Label>
-      </Statistic>
-      <Statistic>
-        <Statistic.Value>3,322</Statistic.Value>
-        <Statistic.Label>Downloads</Statistic.Label>
-      </Statistic>
-      <Statistic>
-        <Statistic.Value>22</Statistic.Value>
-        <Statistic.Label>Tasks</Statistic.Label>
-      </Statistic>
-    </Statistic.Group>
-  )
-const CardExampleGroups = () => (
-    <Card.Group itemsPerRow={2}>
-      <Card>
-        <Card.Content>
-          <Image src='http://www.profitabletrading.com/sites/default/files/candlestick-chart.png' fluid />
-        </Card.Content>
-      </Card>
-      <Card>
-         <StatisticExampleHorizontalGroup></StatisticExampleHorizontalGroup>
-      </Card>
-    </Card.Group>
-  )
-
 
 
 class History extends Component {
@@ -106,35 +78,20 @@ class History extends Component {
 
    return (
             <Segment basic > 
-               
-                <Segment  basic>
-                 <CardExampleGroups></CardExampleGroups>
-                  total pnl  :  {this.props.totalPNL}
-                  total count  :  {this.props.trades.length}                  
-                  loss count :  {this.props.lossingTradesCount}
-                  win  count :  {this.props.winningTradesCount}
-                  average loss : {this.props.averageLossPnl}
-                  average win : {this.props.averageWinPnl}
-                  
-                </Segment>
-                <Segment basic>
-                  <ReactTable
-                    data={this.props.trades}
-                    columns={columns}
-                    filterable
-                    style={{
-                      height: "900px" // This will force the table body to overflow and scroll, since there is not enough room
-                    }}
-                    className="-striped -highlight"
-                    onFilteredChange={(filters) => {
-                      this.props.setHistoricalTradesFilters(filters);
-                    }} 
-                    minRows={0}
-                    filterAll={true}
-                    pages={20}
-                   
-                />
-                </Segment>
+           
+               <HistoryStats 
+                 totalPNL={this.props.totalPNL}
+                 totalCount={this.props.trades.length}
+                 lossingTradesCount={this.props.lossingTradesCount}
+                 winningTradesCount={this.props.winningTradesCount}
+                 averageLossPnl={this.props.averageLossPnl}
+                 averageWinPnl={this.props.averageWinPnl}
+               />
+               <HistoryTable 
+                  trades={this.props.trades}
+                  columns={columns}
+                  setHistoricalTradesFilters = {this.props.setHistoricalTradesFilters}
+               />
             </Segment>
         );
     }
