@@ -15,7 +15,6 @@ import * as TradeSelectors from '../../selectors/TradeSelector'
 
 // TODO : use redux for fitler from react data table 
 
-
 class History extends Component {
 
   constructor(props){

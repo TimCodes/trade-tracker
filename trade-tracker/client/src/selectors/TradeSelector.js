@@ -18,29 +18,34 @@ export const selectClosedTrades = (state) => {
 }
 
 const tradesSelector = state => state.trades.trades;
-const tradeFilterSelector = state => state.trades.visibilityFilter;
-const getVisibleTrades = (trades, filter) => {
+const tradeFiltersSelector = state => state.trades.visibilityFilters;
+const getVisibleTrades = (trades, filters) => {
     
-    switch(filter){
-        case "Open" || "OPEN" : {
-          return   trades.filter( t => t.status === "Open")
-        }
+    
+    console.log(filters); 
+    if(filters){
+      let newTrades = trades.filter(trade =>{
+          let pass = true;
+          filters.forEach( f => {
+            let tradeVal = String(trade[f.id])
+            console.log('val', tradeVal)
+            if(!tradeVal.startsWith(f.value)){
+             pass = false
+            }
+          })
+          return pass;
+       })
+       return newTrades;
+  }
 
-        case "Tracking" || "Tracking" : {
-            return trades.filter( t => t.status === "Tracking")
-        }
-        
-        default: {
-            return trades
-        }
-    }   
+  return trades;
     
 };
 
 
 export const visibleTradesSelector = createSelector(
     tradesSelector, // pick off piece of state
-    tradeFilterSelector,// pick off piece of state
+    tradeFiltersSelector,// pick off piece of state
     getVisibleTrades // last arugment is the func that has our select logic
 );
 
@@ -50,6 +55,7 @@ const historicalTradesFilters = state => state.trades.historicalTradesFilters;
 
 const getHistoricalTrades     = (trades, filters) => {
      console.log(" --- get historical trades firing ---")
+     console.log(filters); 
       if(filters){
         let newTrades = trades.filter(trade =>{
             let pass = true;

@@ -114,7 +114,7 @@ class Tracking extends Component {
             <Segment basic >
                 <TrackingMenu 
                  handleAddNew={this.handleAddNew}
-                 handleStatusChange={this.props.setFilter}
+                 handleStatusChange={(val) => this.props.setFilter(this.props.visibilityFilters, {id:'status', value : val})}
                  />
                 <TrackerCardGroup 
                              trades={this.props.trades} 
@@ -144,7 +144,8 @@ const mapStateToProps = (state) => (
       trackingForm: state.trackingForm,
       trackedTrades: TradeSelectors.selectTrackedTrades(state),
       openTrades : TradeSelectors.selectOpenTrades(state),
-      trades : TradeSelectors.visibleTradesSelector(state)
+      trades : TradeSelectors.visibleTradesSelector(state),
+      visibilityFilters : state.trades.visibilityFilters
     } 
   )
   
@@ -171,8 +172,19 @@ const mapStateToProps = (state) => (
             return   dispatch(actions.fetchTrackedTrades());
           },
 
-          setFilter: (filter) => {
-            return dispatch(actions.setTradesFilter(filter))
+          setFilter: (filters, currentFilter) => {
+              console.log("---- set filter ----", currentFilter, filters)
+              console.log(filters.indexOf(currentFilter))
+              let isFilterInArr = filters.filter(filter => filter.id == currentFilter.id);
+
+              if(isFilterInArr.length < 1){
+                dispatch({type: 'ADD_VISIBILITY_FILTER', payLoad: currentFilter});
+              }else if(!currentFilter.value){
+                dispatch({type: 'DELETE_VISIBILITY_FILTER', payLoad: currentFilter.id});
+              }else{
+                dispatch({type: 'UPDATE_VISIBILITY_FILTER', payLoad: currentFilter});
+              }
+           // return dispatch(actions.setTradesFilter(filter))
           }
       }
   )

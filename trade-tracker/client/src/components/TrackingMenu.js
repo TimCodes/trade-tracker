@@ -33,7 +33,7 @@ let statusOptions = [
     },
     {
         key   : "Both",
-        value : "Both",
+        value : "",
         text  : "Both"
     }
 

@@ -1,7 +1,7 @@
 const defaultState = {
     trades: [],
     filteredTrades: [],
-    visibilityFilter: null,
+    visibilityFilters: [],
     historicalTradesFilters : []
 }
 
@@ -35,12 +35,31 @@ const Trades = (state = defaultState, action) => {
                        
         }
 
-        case 'SET_VISIBILITY_FILTER':
+        case 'ADD_VISIBILITY_FILTER':
           return {
            ...state,
-           visibilityFilter: action.payLoad
+           visibilityFilters:  [...state.visibilityFilters, action.payLoad ]
         }
+
+        case 'UPDATE_VISIBILITY_FILTER':
+        return {
+         ...state,
+         visibilityFilters: state.visibilityFilters.map((filter) => {
+             if(filter.id === action.payLoad.id){
+                 return Object.assign({}, filter, {
+                     value: action.payLoad.value
+                 })
+             }
+         })
+        }
+      
         
+        case 'DELETE_VISIBILITY_FILTER':
+        return {
+         ...state,
+         visibilityFilters:  state.visibilityFilters.filter(filter => filter.id != action.payLoad)
+        }
+      
         
         case 'SET_HISTORICAL_FILTERS':
           return {
