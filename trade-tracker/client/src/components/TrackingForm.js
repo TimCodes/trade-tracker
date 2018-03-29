@@ -3,6 +3,13 @@ import { connect } from 'react-redux';
 import { Button, Checkbox, Form, Input, Image } from 'semantic-ui-react'
 import Dropzone from 'react-dropzone'
 
+import {MarketDropDown} from './MarketDropDown'
+import TimeFrameDropDown from './TimeFrameDropDown'
+import TimeOfDayDropDown from './TimeOfDayDropDown'
+
+
+
+
 import * as actions from '../actions/TrackerActions'
 
 class  TrackerForm extends Component {
@@ -28,7 +35,11 @@ class  TrackerForm extends Component {
     } 
 
     handleFormChange(e, {value}){
-        console.log("--- form change ---", e.target)
+        console.log("--- form change ---", Object.keys(e))
+        console.log("--- form change value ---", value)
+        console.log("--- form change name ---", e.target)
+        
+        
         this.setState({ [e.target.name] : value });
         this.props.setTrackingForm({ [e.target.name] : value })
     }  
@@ -58,6 +69,7 @@ class  TrackerForm extends Component {
                 <Form.Field>
                     <label>Time Frame</label>
                     <Input placeholder='5m' name="timeFrame" onChange={this.handleFormChange} value={this.state.timeFrame} />
+                    <TimeFrameDropDown handleTimeFrameChange={this.handleFormChange}  value={this.state.timeFrame} ></TimeFrameDropDown>
                 </Form.Field>
                 <Form.Field>
                     <label>Core Strategy</label>
