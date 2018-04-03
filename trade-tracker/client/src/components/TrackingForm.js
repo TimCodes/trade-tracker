@@ -3,14 +3,13 @@ import { connect } from 'react-redux';
 import { Button, Checkbox, Form, Input, Image } from 'semantic-ui-react'
 import Dropzone from 'react-dropzone'
 
-import {MarketDropDown} from './MarketDropDown'
+import TradeFormDropDown from './TradeFormDropDown'
 import TimeFrameDropDown from './TimeFrameDropDown'
 import TimeOfDayDropDown from './TimeOfDayDropDown'
 
-
-
-
 import * as actions from '../actions/TrackerActions'
+
+
 
 class  TrackerForm extends Component {
     constructor(props){
@@ -34,14 +33,14 @@ class  TrackerForm extends Component {
         this.props.handleSubmit(this.state)
     } 
 
-    handleFormChange(e, {value}){
+    handleFormChange(e, vals){
         console.log("--- form change ---", Object.keys(e))
-        console.log("--- form change value ---", value)
-        console.log("--- form change name ---", e.target)
+        console.log("--- form change value ---", vals)
+        console.log("--- form change name ---", e.target.name)
         
         
-        this.setState({ [e.target.name] : value });
-        this.props.setTrackingForm({ [e.target.name] : value })
+        this.setState({ [vals.name] : vals.value });
+        this.props.setTrackingForm({ [vals.name] : vals.value })
     }  
 
     onDrop(acceptedFiles, rejectedFiles) {
@@ -60,6 +59,7 @@ class  TrackerForm extends Component {
     }
     
     render() {
+        let {tradeFormOptions} = this.props;
     return (
             <Form>
                 <Form.Field>
@@ -68,8 +68,11 @@ class  TrackerForm extends Component {
                 </Form.Field>
                 <Form.Field>
                     <label>Time Frame</label>
-                    <Input placeholder='5m' name="timeFrame" onChange={this.handleFormChange} value={this.state.timeFrame} />
-                    <TimeFrameDropDown handleTimeFrameChange={this.handleFormChange}  value={this.state.timeFrame} ></TimeFrameDropDown>
+                    <TradeFormDropDown name="timeFrame" handleTimeFrameChange={this.handleFormChange} options={tradeFormOptions.timeFrameOptions}  value={this.state.timeFrame} />
+                </Form.Field>
+                <Form.Field>
+                    <label>Market</label>
+                    <TradeFormDropDown value={this.state.market} options={tradeFormOptions.marketOptions} name={"Market"} onChange={this.handleFormChange} />
                 </Form.Field>
                 <Form.Field>
                     <label>Core Strategy</label>
@@ -114,14 +117,15 @@ class  TrackerForm extends Component {
 
 const mapStateToProps = (state) => (
   {    
-    trackingForm: state.trackingForm
+    trackingForm: state.trackingForm,
+    tradeFormOptions : state.tradeFormOptions 
   } 
 )
 
 const mapDispatchToProps = (dispatch) => (
     {
         setTrackingForm : (trackingForm) => {
-            return dispatch({ type: 'SET_FORM_VALUE', payLoad:trackingForm })
+            return dispatch({ type: 'SET_FORM_VALUES', payLoad:trackingForm })
         }
     }
 )

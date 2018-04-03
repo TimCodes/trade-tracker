@@ -50,7 +50,7 @@ const TimeFrameDropDown = (props) => {
                name="timeFrame"
                placeholder={props.value || "Time Frame"} 
                options={timeFrameOptions}  
-               onChange={(e) => { console.log("----e ---", e); e.name = "timeFrame ";  return  props.handleTimeFrameChange(e)}  }
+               onChange={props.handleTimeFrameChange} 
     />
 )};
 
